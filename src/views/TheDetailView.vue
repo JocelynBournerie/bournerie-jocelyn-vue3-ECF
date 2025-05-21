@@ -62,7 +62,7 @@ onBeforeMount(async () => {
                     <article class="box post">
                         <a href="#" class="featured"><img
                                 :src="newAmiibo.image"
-                                alt="" /></a>
+                                :alt="newAmiibo.character" /></a>
                         <header>
                             <h2>Name</h2>
                             <p>type</p>

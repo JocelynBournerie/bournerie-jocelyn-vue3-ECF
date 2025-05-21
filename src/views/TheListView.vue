@@ -32,6 +32,8 @@ const amiiboList = computed(() => {
 	return result
 })
 
+
+
 const changePage = (newPage) => {
 	if (newPage === '+') {
 		if(currentPage.value<pagesNumber.value){
@@ -47,6 +49,8 @@ const changePage = (newPage) => {
 	}
 	router.push({ query: { page: currentPage.value } })
 }
+
+
 
 
 watch(
