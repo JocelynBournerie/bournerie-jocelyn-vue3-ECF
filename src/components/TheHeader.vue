@@ -1,5 +1,15 @@
 <script setup>
+import { ref, watch } from 'vue';
+import { useRoute } from 'vue-router';
 
+const route = useRoute()
+
+const currentPage = ref(route.name)
+watch(
+	()=>route.name,
+	(newRoute)=>currentPage.value = newRoute
+
+)
 </script>
 
 <template>
@@ -12,8 +22,8 @@
 					<!-- Nav -->
 						<nav id="nav">
 							<ul>
-								<li class="current"><RouterLink :to="{name:'home'}">Home</RouterLink></li>
-								<li><RouterLink :to="{name:'list'}">Liste Amiibo</RouterLink></li>
+								<li :class="currentPage==='home' ? 'current' : ''"><RouterLink :to="{name:'home'}">Home</RouterLink></li>
+								<li :class="currentPage==='list' ? 'current' : ''"><RouterLink :to="{name:'list', query:{page:1}}">Liste Amiibo</RouterLink></li>
 							</ul>
 						</nav>
 				</section>

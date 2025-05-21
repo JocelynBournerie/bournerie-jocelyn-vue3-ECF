@@ -1,4 +1,25 @@
 <script setup>
+import { onBeforeMount, ref } from 'vue';
+import { getAmiiboByTail } from '@/services/api.services';
+import { useRoute } from 'vue-router';
+
+
+const route = useRoute()
+
+
+const newAmiibo = ref({
+    amiiboSeries:"",
+    character:"",
+    gameSeries:"",
+    type:"",
+    release:"",
+    image:"",
+})
+
+onBeforeMount(async () => {
+    let result = await getAmiiboByTail(route.query.tail)
+    newAmiibo.value = await result.amiibo[0]
+})
 
 </script>
 
@@ -13,10 +34,10 @@
                         <header>
                             <h3>Infos</h3>
                         </header>
-                        <p> amiiboSeries: <b>Animal Crossing</b> <br />
-                            character: Cube<br />
-                            gameSeries: Animal Crossing<br />
-                            type: card
+                        <p> amiiboSeries: <b>{{newAmiibo.amiiboSeries}}</b> <br />
+                            character: {{newAmiibo.character}}<br />
+                            gameSeries: {{newAmiibo.gameSeries}}<br />
+                            type: {{newAmiibo.type}}
                         </p>
 
                     </section>
@@ -26,10 +47,10 @@
                         </header>
 
                         <ul class="divided">
-                            <li>au: 2016-03-19</li>
-                            <li>eu: 2016-03-18</li>
-                            <li></li>
-                            <li></li>
+                            <li v-if="newAmiibo.release.au">au: {{newAmiibo.release.au}}</li>
+                            <li v-if="newAmiibo.release.eu">eu: {{newAmiibo.release.eu}}</li>
+                            <li v-if="newAmiibo.release.jp">jp: {{newAmiibo.release.jp}}</li>
+                            <li v-if="newAmiibo.release.na">na: {{newAmiibo.release.na}}</li>
                         </ul>
 
                     </section>
@@ -40,7 +61,7 @@
                     <!-- Content -->
                     <article class="box post">
                         <a href="#" class="featured"><img
-                                src="https://raw.githubusercontent.com/N3evin/AmiiboAPI/master/images/icon_00800102-035d0302.png"
+                                :src="newAmiibo.image"
                                 alt="" /></a>
                         <header>
                             <h2>Name</h2>
